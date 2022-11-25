@@ -1,0 +1,61 @@
+{% extends 'layouts/base.html.twig' %}
+{% block body %}
+  <div class="table-responsive">
+    <table class="table  table-striped   caption-top  table-hover table-bordered">
+      <div class="row">
+        <caption class="">
+          News Lists
+        </caption>
+      </div>
+      <thead>
+        <tr class='thead'>
+          {# sorting of properties based on query components #}
+          <th>
+            {{ knp_pagination_sortable(pagination, 'News Title', 'n.title') }}
+          </th>
+          <th>
+            {{ knp_pagination_sortable(pagination, 'News Description', 'n.description') }}
+          </th>
+          <th>
+            {{ knp_pagination_sortable(pagination, 'Image', 'n.image') }}
+          </th>
+          {% if is_granted('ROLE_ADMIN') %}
+            <th>
+              Action                           
+            </th>
+          {% endif %}
+        </tr>
+      </thead>
+      {# table body #}
+      <tbody>
+        {% for n in pagination %}
+          <tr {% if loop.index is odd %} class="table-secondary" {% endif %}>
+            <td>
+              {{ n.getTitle }}
+            </td>
+            <td>
+              {{ n.getDescription }}
+            </td>
+            <td>
+              <img src="{{ n.getImage }}" width="200" hight="200"></td>
+              {% if is_granted('ROLE_ADMIN') %}
+                <td>
+                  <button type="button" class="btn btn-sm btn-danger delete_news" data-id="{{ n.id }}">
+                    Delete                               
+                  </button>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {# display navigation #}
+    <div class="pagination">
+      {{ knp_pagination_render(pagination) }}
+    </div>
+    {% block customscripts %}
+      <script type="text/javascript" src="{{ asset('js/admin.js') }}"></script>
+    {% endblock %}
+  {% endblock %}
+  

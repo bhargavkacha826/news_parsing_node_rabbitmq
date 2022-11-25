@@ -1,0 +1,8 @@
+<header class=" {% if app.user %} d-flex justify-content-between {% else %} d-flex justify-content-center {% endif %} py-3 mb-4 px-4 align-items-center" style="background-color: #FEA9FC;">
+<h1 >News App</h1>
+{% if app.user %}
+<div class="text-end">      
+      <a type="button" href="{{path('app_logout')}}" class="btn btn-outline-primary ">Logout</a>
+</div>
+{% endif %}
+</header>
